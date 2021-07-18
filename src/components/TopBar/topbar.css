@@ -1,0 +1,25 @@
+.topbar{
+  @apply flex items-center justify-between md:py-6 py-3 flex-col
+}
+.topbar__menu{
+  @apply flex items-center justify-between w-full mb-4
+}
+.topbar__menu--logo{
+  @apply text-2xl 
+}
+.topbar__menu--link{
+
+}
+.topbar__search{
+  @apply md:w-6/12 md:absolute inset-x-0 mx-auto
+}
+.search{
+  @apply flex items-center mx-4 mb-2 md:mb-0
+}
+
+.search__input{
+  @apply md:px-6 px-4 py-2 rounded-l-lg border-gray-200 border focus:outline-none w-full 
+}
+.search__button{
+  @apply bg-gray-700 text-white md:px-6 px-3 py-2 rounded-r-lg border border-gray-700 block hover:bg-gray-600
+}

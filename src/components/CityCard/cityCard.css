@@ -1,0 +1,21 @@
+.card {
+  @apply px-4 py-4  bg-white rounded-lg shadow-sm relative flex flex-col justify-center items-center;
+}
+.card__btn {
+  @apply rounded-lg rounded-bl-none rounded-tr-none bg-gray-500 hover:bg-gray-600 px-3 py-1 absolute bottom-0 right-0 text-white;
+}
+.card__row {
+  @apply flex items-center justify-between w-full;
+}
+.card__col {
+  @apply flex items-center my-3;
+}
+.card__col--icon {
+  @apply w-14 mr-2 bg-blue-50  rounded-lg;
+}
+.card__col--temp {
+  @apply md:text-2xl text-xl font-medium flex items-center;
+}
+.card__footer {
+  @apply flex items-center justify-between text-gray-500 text-sm w-full mb-6;
+}
