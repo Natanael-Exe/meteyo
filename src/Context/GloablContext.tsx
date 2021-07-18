@@ -1,5 +1,5 @@
-import { createContext, useReducer, FC } from "react";
-import axios, { AxiosResponse } from "axios";
+import { createContext, useReducer, FC, useEffect } from "react";
+import axios from "axios";
 import { WeatherType } from "../models/weather.interface";
 
 // the type of the context state
@@ -24,7 +24,8 @@ type ACTIONTYPE =
   | { type: "removeFromList"; payload: number }
   | { type: "loading" }
   | { type: "error"; payload: string }
-  | { type: "success"; payload: {} };
+  | { type: "success"; payload: {} }
+  | { type: "persist"; payload: WeatherType[] };
 
 export const globalContext = createContext(initialState);
 
@@ -65,6 +66,9 @@ const reducer = (state: typeof initialState, action: ACTIONTYPE) => {
       );
       //return the state with the modified list
       return { ...state, favorites: newFavorites };
+    // persist data
+    case "persist":
+      return { ...state, favorites: action.payload };
     default:
       return state;
   }
@@ -73,18 +77,26 @@ const reducer = (state: typeof initialState, action: ACTIONTYPE) => {
 const GlobalContextProvider: FC = ({ children }: any) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // add locale storage data to the storage
+  useEffect(() => {
+    const locale: string | any = localStorage.getItem("favorites");
+    const localFavorites: WeatherType[] = JSON.parse(locale);
+    dispatch({ type: "persist", payload: localFavorites });
+  }, []);
+
   // fetch weather from API
   const fetchCityWeather = (city: string) => {
     dispatch({ type: "error", payload: "" });
     dispatch({ type: "loading" });
     axios
-      .get<AxiosResponse<WeatherType>>(
-        `http://api.openweathermap.org/data/2.5/weather?q=${city}&mode=json&units=metric&appid=${process.env.REACT_APP_API_KEY}`
-      ,{
-        headers:{
-          "Content-Type": "application/json"
+      .get(
+        `http://api.openweathermap.org/data/2.5/weather?q=${city}&mode=json&units=metric&appid=${process.env.REACT_APP_API_KEY}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      })
+      )
       .then(({ data }) => dispatch({ type: "success", payload: data }))
       .catch((err) =>
         dispatch({ type: "error", payload: err.response?.data?.message })
@@ -94,13 +106,21 @@ const GlobalContextProvider: FC = ({ children }: any) => {
   // City and his weather in the favorites list
   const addToList = (cityWeather: WeatherType) => {
     dispatch({ type: "addToList", payload: cityWeather });
-    localStorage.setItem("favorites", JSON.stringify(state.favorites));
+    // persist data to local storage
+    localStorage.setItem(
+      "favorites",
+      JSON.stringify([...state.favorites, cityWeather])
+    );
   };
 
   // remove city from the list
   const removeFromList = (id: number) => {
     dispatch({ type: "removeFromList", payload: id });
-    localStorage.setItem("favorites", JSON.stringify(state.favorites));
+    const newFavorites = state.favorites.filter(
+      (city: WeatherType) => !(city.id === id)
+    );
+    // persist data to local storage
+    localStorage.setItem("favorites", JSON.stringify(newFavorites));
   };
 
   return (
