@@ -51,7 +51,7 @@ const Index = () => {
       )}
       <div className="forecast__section">
         {/* section title  */}
-        <h3 className="text-lg font-semibold">Weather Forecast</h3>
+        <h2 className="text-lg font-semibold">Weather Forecast</h2>
         {/* add to list button */}
         {isFetched && !isAlreadyAdded && (
           <button

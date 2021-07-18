@@ -6,7 +6,7 @@
   @apply px-6 py-4 h-44 bg-white rounded-lg shadow-sm;
 }
 .cardItem__title {
-  @apply text-gray-400 mb-2;
+  @apply text-gray-500 mb-2;
 }
 .cardItem__percent {
   @apply flex items-center justify-between;

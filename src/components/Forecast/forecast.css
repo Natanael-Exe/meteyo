@@ -20,7 +20,7 @@
   @apply md:text-5xl text-2xl font-medium flex items-center
 }
 .cardForecast__date{
-  @apply text-gray-400 text-sm mt-1
+  @apply text-gray-500 text-sm mt-1
 }
 .cityInfo{
   @apply text-gray-500 text-sm
