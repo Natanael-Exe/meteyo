@@ -92,7 +92,7 @@ const GlobalContextProvider: FC = ({ children }: any) => {
     dispatch({ type: "loading" });
     axios
       .get(
-        `http://api.openweathermap.org/data/2.5/weather?q=${city}&mode=json&units=metric&appid=${process.env.REACT_APP_API_KEY}`,
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&mode=json&units=metric&appid=${process.env.REACT_APP_API_KEY}`,
         {
           headers: {
             "Content-Type": "application/json",
