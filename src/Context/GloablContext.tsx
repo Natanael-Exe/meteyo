@@ -80,7 +80,11 @@ const GlobalContextProvider: FC = ({ children }: any) => {
     axios
       .get<AxiosResponse<WeatherType>>(
         `http://api.openweathermap.org/data/2.5/weather?q=${city}&mode=json&units=metric&appid=${process.env.REACT_APP_API_KEY}`
-      )
+      ,{
+        headers:{
+          "Content-Type": "application/json"
+        }
+      })
       .then(({ data }) => dispatch({ type: "success", payload: data }))
       .catch((err) =>
         dispatch({ type: "error", payload: err.response?.data?.message })

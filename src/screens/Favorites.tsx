@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CityCard from "../components/CityCard/index";
 
@@ -6,6 +6,11 @@ import { globalContext } from "../Context/GloablContext";
 
 function Favorites() {
   const { state } = useContext(globalContext);
+
+  useEffect(() => {
+    document.title = "Favorites Page";
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 ">
       <div className="bg-white shadow-sm">
