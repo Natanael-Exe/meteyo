@@ -1,5 +1,5 @@
 import { createContext, useReducer, FC, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { WeatherType } from "../models/weather.interface";
 
 // the type of the context state
@@ -91,13 +91,8 @@ const GlobalContextProvider: FC = ({ children }: any) => {
     dispatch({ type: "error", payload: "" });
     dispatch({ type: "loading" });
     axios
-      .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&mode=json&units=metric&appid=${process.env.REACT_APP_API_KEY}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      .get<AxiosResponse<WeatherType>>(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&mode=json&units=metric&appid=${process.env.REACT_APP_API_KEY}`
       )
       .then(({ data }) => dispatch({ type: "success", payload: data }))
       .catch((err) =>
