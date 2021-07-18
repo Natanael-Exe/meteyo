@@ -80,8 +80,10 @@ const GlobalContextProvider: FC = ({ children }: any) => {
   // add locale storage data to the storage
   useEffect(() => {
     const locale: string | any = localStorage.getItem("favorites");
-    const localFavorites: WeatherType[] = JSON.parse(locale);
-    dispatch({ type: "persist", payload: localFavorites });
+    if (locale) {
+      const localFavorites: WeatherType[] = JSON.parse(locale);
+      dispatch({ type: "persist", payload: localFavorites });
+    }
   }, []);
 
   // fetch weather from API
